@@ -10,4 +10,5 @@ git = repo.git
 
 print git.status()
 print git.fetch('-v', repoRemoteName)
+print git.checkout(repoBranchName)
 print git.reset('--hard', '{0}/{1}'.format(repoRemoteName, repoBranchName))
