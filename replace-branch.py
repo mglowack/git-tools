@@ -1,14 +1,20 @@
 from git import Repo
 import sys
+import argparse
 
-repoPath = sys.argv[1]
-repoBranchName = sys.argv[2]
-repoRemoteName = sys.argv[3] if len(sys.argv) > 3 else 'origin'
+parser = argparse.ArgumentParser(description='Git tools.')
+parser.add_argument('-r', '--remote', metavar='name', default='origin')
+parser.add_argument('repoPath')
+parser.add_argument('branchName')
 
-repo = Repo(repoPath)
+args = parser.parse_args(sys.argv[1:])
+print args
+
+
+repo = Repo(args.repoPath)
 git = repo.git
 
 print git.status()
-print git.fetch('-v', repoRemoteName)
-print git.checkout(repoBranchName)
-print git.reset('--hard', '{0}/{1}'.format(repoRemoteName, repoBranchName))
+print git.fetch('-v', args.remote)
+print git.checkout(args.branchName)
+print git.reset('--hard', '{0}/{1}'.format(args.remote, args.branchName))
